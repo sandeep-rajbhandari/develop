@@ -6,10 +6,10 @@ public class toPrint {
     public toPrint(Protobuff.VendorList vendorList){
         this.vendorList=vendorList;
         for (Protobuff.Vendor output : this.vendorList.getListList()){
-            System.out.println(output.getPaidAmount());
-            System.out.println(output.getPaidDate());
-            System.out.println(output.getVendorName());
-            System.out.println(output.getVendorType());
+            System.out.println("paidAmount"+output.getPaidAmount());
+            System.out.println("paidDate"+output.getPaidDate());
+            System.out.println("VendorName"+output.getVendorName());
+            System.out.println("VendorType"+output.getVendorType());
 
         }
     }
