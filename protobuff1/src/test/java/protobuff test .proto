@@ -1,0 +1,15 @@
+
+message Vendor{
+
+     optional string vendorName=1;
+     optional string paidDate=2;
+     optional string vendorType=3;
+     optional float paidAmount=4;
+
+}
+
+message VendorList{
+
+    repeated Vendor list=1;
+
+}
