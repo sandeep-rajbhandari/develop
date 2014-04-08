@@ -1,12 +1,5 @@
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.count.CountRequest;
-import org.elasticsearch.action.count.CountResponse;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -14,26 +7,21 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.facet.FacetBuilders;
-import org.elasticsearch.search.facet.terms.TermsFacet;
-
-import static org.elasticsearch.common.xcontent.XContentFactory.*;
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 
 public class EsClient {
     Client client;
     EsClient(){
-        String clustername="elasticsearch_sandeep";
+        String clustername="essandeep";
 
         Settings settings = ImmutableSettings.settingsBuilder()
                 .put("cluster.name", clustername).build();
@@ -49,22 +37,22 @@ public class EsClient {
 //        QueryBuilder searchQuery=QueryBuilders.filteredQuery(QueryBuilders.matchAllQuery(), filters);
 
         //index api
-        try {
-            IndexRequestBuilder in= client.prepareIndex("twitter", "tweet", "600")
-                    .setSource(jsonBuilder()
-                            .startObject()
-                            .field("user", "kimchy")
-                            .field("postDate", new Date())
-                            .field("message", "trying out Elastic Search")
-                            .endObject()
-                    );
-                    IndexResponse indexResponse=in.execute()
-                    .actionGet();
-            System.out.println("index response:"+indexResponse.getIndex());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            IndexRequestBuilder in= client.prepareIndex("twitter", "tweet", "600")
+//                    .setSource(jsonBuilder()
+//                            .startObject()
+//                            .field("user", "kimchy")
+//                            .field("postDate", new Date())
+//                            .field("message", "trying out Elastic Search")
+//                            .endObject()
+//                    );
+//                    IndexResponse indexResponse=in.execute()
+//                    .actionGet();
+//            System.out.println("index response:"+indexResponse.getIndex());
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 //        List<String> hobbies = new ArrayList();
 //        hobbies.add(0, "rollerblading");
@@ -114,26 +102,26 @@ public class EsClient {
 //
 //
 //
-//        SearchRequestBuilder srb=client.prepareSearch("planet")
-//                .setTypes("hacker")
-//                .setQuery(QueryBuilders.matchQuery("hobbies", "rollerblading"))
-////                .setPostFilter(filters)
-//                .setSize(10);
-////                .addFields();
-////        FacetBuilder facet= FacetBuilders.termsFacet("a").field("");
-//        SearchResponse searchResponse=srb.execute().actionGet();//JSON result
-//        System.out.println(searchResponse);
-//        for(SearchHit hit:searchResponse.getHits().hits()){
-////            hit.getFields()
-//            Map<String,Object> sourceMap=hit.getSource();
-////            String id = hit.getId();
-//            for(Map.Entry<String,Object> aentry:sourceMap.entrySet()){
-////                System.out.println("key = " + aentry.getKey());
-////                System.out.println("value = " + aentry.getValue());
-//
-//
-//            }
-//        }
+        SearchRequestBuilder srb=client.prepareSearch("sports")
+                .setTypes("athlete")
+                .setQuery(QueryBuilders.matchQuery("sport", "basketball"))
+//                .setPostFilter(filters)
+                .setSize(10);
+//                .addFields();
+//        FacetBuilder facet= FacetBuilders.termsFacet("a").field("");
+        SearchResponse searchResponse=srb.execute().actionGet();//JSON result
+        System.out.println(searchResponse);
+        for(SearchHit hit:searchResponse.getHits().hits()){
+//            hit.getFields()
+            Map<String,Object> sourceMap=hit.getSource();
+//            String id = hit.getId();
+            for(Map.Entry<String,Object> aentry:sourceMap.entrySet()){
+                System.out.println("key = " + aentry.getKey());
+                System.out.println("value = " + aentry.getValue());
+
+
+            }
+        }
 //
 //        //multisearch api
 //        SearchRequestBuilder sb1 = client.prepareSearch()
@@ -178,9 +166,10 @@ public class EsClient {
 
     public void movieQuery(){
         SearchResponse searchResponse = client.prepareSearch()
-                .setQuery(QueryBuilders.matchQuery("description", "hacking"))
-                .addFacet(FacetBuilders.termsFacet("f")
-                        .field("genre"))
+               // .setQuery(QueryBuilders.matchQuery("handle", "mark"))
+                .setQuery((QueryBuilders.matchAllQuery()))
+              // .addFacet(FacetBuilders.termsFacet("m")
+                   //     .field("handle"))
                 .execute()
                 .actionGet();
 
@@ -196,6 +185,15 @@ public class EsClient {
 //
 //        }
 
+        System.out.println(searchResponse);
+
+    }
+
+    public void matchAll(){
+        SearchResponse searchResponse=client.prepareSearch("sports")
+                .setQuery(QueryBuilders.matchAllQuery())
+                .execute()
+                .actionGet();
         System.out.println(searchResponse);
 
     }
@@ -225,10 +223,11 @@ public class EsClient {
     public static void main(String[] args) {
         EsClient esc=new EsClient();
         System.out.println("Starting cluster.............");
-      esc.makeQuery();
-        esc.searchTweet();
-//        esc.movieQuery();
+     esc.makeQuery();
+       // esc.searchTweet();
+       //esc.movieQuery();
        // esc.productQuery();
+        esc.matchAll();
     }
 
 }

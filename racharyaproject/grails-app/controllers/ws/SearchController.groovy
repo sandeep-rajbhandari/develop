@@ -10,13 +10,16 @@ class SearchController {
     def searchService
     SearchRequest searchReq
 
-    def index() {render init()?:new JSONObject() as JSON}
-    def init(){
+    def index() {init()}
+    def count() {init()}
+    private def init(){
+        println("actual params:"+params)
         format()
         if (params.containsKey(RequestConstants.QUERY)){
             query=params.get(RequestConstants.QUERY)
         }
-        return searchService.search(searchReq)
+        def opp=searchService.search(searchReq)
+        render opp?:new JSONObject() as JSON
     }
     def format(){
         setReportName()
@@ -37,5 +40,8 @@ class SearchController {
 
     private void setParams() {
         searchReq = new SearchRequest(parameters: getParams() ?: new HashMap<String, String>())
+        println("parms"+getParams())
+
+
     }
 }

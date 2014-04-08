@@ -13,6 +13,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map />
+        <naming-strategy-map />
       </configuration>
     </facet>
   </component>
@@ -53,7 +54,6 @@
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (estest-grailsPlugins)">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.eclipse.jdt.core.compiler/ecj/jars/ecj-3.7.2.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.spatial4j/spatial4j/bundles/spatial4j-0.4.1.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.lucene/lucene-spatial/jars/lucene-spatial-4.7.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.lucene/lucene-grouping/jars/lucene-grouping-4.7.0.jar!/" />
@@ -69,6 +69,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.lucene/lucene-analyzers-common/jars/lucene-analyzers-common-4.7.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.lucene/lucene-core/jars/lucene-core-4.7.0.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.elasticsearch/elasticsearch/jars/elasticsearch-1.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.eclipse.jdt.core.compiler/ecj/jars/ecj-3.7.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

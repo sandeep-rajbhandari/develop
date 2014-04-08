@@ -32,11 +32,9 @@ class SearchService {
 
     private String execute(IQueryBuilder iqb, IQueryResponse listener) {
         ActionRequestBuilder builder = iqb.getQuery(getClient(), request)
+        println("builder"+builder)
         def executor = new Executor(builder, listener)
         executor.run()
-        while (!executor.isComplete.get()) {
-            Thread.sleep(100)
-        }
         return executor.getResponse()
     }
 

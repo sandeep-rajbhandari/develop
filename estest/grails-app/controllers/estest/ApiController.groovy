@@ -2,6 +2,7 @@ package estest
 
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
+import org.elasticsearch.action.ActionListener
 import org.elasticsearch.action.search.SearchRequestBuilder
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.facet.Facet
@@ -20,7 +21,19 @@ class ApiController {
 
 
 
-        SearchResponse response=requestBuilder.execute().actionGet();
+        SearchResponse   response=requestBuilder.execute().actionGet();
+        requestBuilder.execute(new ActionListener<SearchResponse>() {
+            @Override
+            void onResponse(SearchResponse searchResponse) {
+                println "searchResponse = $searchResponse"
+
+            }
+
+            @Override
+            void onFailure(Throwable throwable) {
+
+            }
+        });
         for (Facet facet : response.facets.facets()) {
             if(facet instanceof StatisticalFacet){
                 StatisticalFacet sfacet=(StatisticalFacet)facet

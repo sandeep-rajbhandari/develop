@@ -1,5 +1,5 @@
 ---
-cluster_name : esnew
+cluster_name : elasticsearch_sandeep
 host_name : localhost
 http_port : 9200
 tcp_port : 9300
