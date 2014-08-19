@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">start-up1</string>
+    <string name="hello_world">I dreamed of a phone\nOpen source and hackable\nAndroid for the win!”.
+</string>
+    <string name="action_settings">Settings</string>
+    <string name="android_love">show me android love</string>
+
+</resources>
