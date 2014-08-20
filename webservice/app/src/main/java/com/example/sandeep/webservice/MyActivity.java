@@ -2,6 +2,7 @@ package com.example.sandeep.webservice;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,24 +56,29 @@ public class MyActivity extends Activity{
         RequestParams requestParams=new RequestParams();
         if((input!=null)||(!input.isEmpty())){
             requestParams.add("data",input);
+            invokeWS(requestParams);
+            Toast.makeText(getApplicationContext(),input,Toast.LENGTH_LONG);
 
-        }
+       }
+
 
     }
 
     public void invokeWS(RequestParams params){
         AsyncHttpClient client=new AsyncHttpClient();
-        client.get("https://thawing-anchorage-5992.herokuapp.com/data",params,new AsyncHttpResponseHandler(){
+        client.get("https://service21test.herokuapp.com/data",params,new AsyncHttpResponseHandler(){
             @Override
             public void onSuccess(String responseBody) {
+
                 try {
                     JSONObject json=new JSONObject(responseBody);
                     String data=json.getString("data");
-                    Toast.makeText(getApplicationContext(),data,Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),data,Toast.LENGTH_LONG).show();
+
 
                 }
                 catch (Exception EX){
-                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
                 }
             }
         });
