@@ -65,6 +65,7 @@ public class MyActivity extends Activity{
     }
 
     public void invokeWS(RequestParams params){
+        //for getting client
         AsyncHttpClient client=new AsyncHttpClient();
         client.get("https://service21test.herokuapp.com/data",params,new AsyncHttpResponseHandler(){
             @Override
